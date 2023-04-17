@@ -1,0 +1,25 @@
+#login-container {
+  min-height: 100vh;
+  background-image: url("../../assets/login_bg.jpg");
+  background-position: center;
+  background-size: cover;
+}
+.form-container {
+  background-color: rgba(255, 255, 255, 0.501);
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.form-container > div {
+  padding: 1rem 2rem;
+  border-radius: 10px;
+  background-color: white;
+}
+
+/* #login-container h2,
+#login-container label {
+  color: white;
+} */
