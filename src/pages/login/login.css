@@ -1,11 +1,9 @@
 #login-container {
   min-height: 100vh;
-  background-image: url("../../assets/login_bg.jpg");
-  background-position: center;
+  background-image: url("../../assets/gymBg.jpg");
   background-size: cover;
 }
 .form-container {
-  background-color: rgba(255, 255, 255, 0.501);
   width: 100%;
   min-height: 100vh;
   display: flex;
@@ -15,11 +13,15 @@
 
 .form-container > div {
   padding: 1rem 2rem;
-  border-radius: 10px;
-  background-color: white;
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 16px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+  border: 1px solid rgba(0, 0, 0, 0.3);
 }
 
-/* #login-container h2,
 #login-container label {
   color: white;
-} */
+  font-size: 1rem;
+}

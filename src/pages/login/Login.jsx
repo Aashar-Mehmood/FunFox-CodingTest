@@ -1,26 +1,47 @@
-import "./login.css";
 import React from "react";
-import { Row, Col, Typography, Button, Form, Input, Space } from "antd";
+import { Row, Col, Button, Form, Input, Space, message } from "antd";
 import { MailTwoTone, LockTwoTone } from "@ant-design/icons";
-const { Title } = Typography;
-const onFinish = (values) => {
-  console.log("Success:", values);
-};
-const onFinishFailed = (errorInfo) => {
-  console.log("Failed:", errorInfo);
-};
+import "./login.css";
 export default function Login() {
+  const [messageApi, contextHolder] = message.useMessage();
+
+  function showMessage(type, msgText) {
+    messageApi.open({
+      type: type,
+      content: msgText,
+    });
+  }
+
+  const onFinish = (values) => {
+    console.log("Success:", values);
+    if (!values.email && !values.password) {
+      showMessage("error", "Enter email and password");
+    } else if (!values.email) {
+      showMessage("error", "Email is Required");
+    } else if (!values.password) {
+      showMessage("error", "Password is Required");
+    } else if (
+      !values.email.match(
+        /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
+      )
+    ) {
+      showMessage("error", "Invalid Email");
+    }
+  };
+
   return (
     <section id="login-container">
+      {contextHolder}
       <Row className="form-container">
         <Col xs={22} sm={16} md={12} lg={8}>
-          <Space direction="vertical" size="large" style={{ display: "flex" }}>
-            <Title level={2}>Login</Title>
+          <Space direction="vertical" size="large" className="flex">
+            <h2 className="text-2xl text-center text-white">
+              Login to Your Account
+            </h2>
             <Form
               name="login"
               layout="vertical"
               onFinish={onFinish}
-              onFinishFailed={onFinishFailed}
               autoComplete="off"
             >
               <Space
@@ -28,38 +49,25 @@ export default function Login() {
                 size="small"
                 style={{ display: "flex" }}
               >
-                <Form.Item
-                  label="Email"
-                  name="email"
-                  rules={[
-                    {
-                      required: true,
-                      message: "Please input your email!",
-                    },
-                    {
-                      type: "email",
-                      message: "Enter a valid email!",
-                    },
-                  ]}
-                >
-                  <Input size="large" prefix={<MailTwoTone />} />
+                <Form.Item label="Email" name="email">
+                  <Input
+                    size="large"
+                    placeholder="example@gmail.com"
+                    prefix={<MailTwoTone />}
+                  />
                 </Form.Item>
 
-                <Form.Item
-                  label="Password"
-                  name="password"
-                  rules={[
-                    {
-                      required: true,
-                      message: "Please input your password!",
-                    },
-                  ]}
-                >
+                <Form.Item label="Password" name="password">
                   <Input.Password size="large" prefix={<LockTwoTone />} />
                 </Form.Item>
 
                 <Form.Item>
-                  <Button type="primary" htmlType="submit" size="large">
+                  <Button
+                    type="primary"
+                    htmlType="submit"
+                    size="large"
+                    className="block w-full mt-4"
+                  >
                     Login
                   </Button>
                 </Form.Item>
