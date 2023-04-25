@@ -2,6 +2,7 @@ import React from "react";
 import { Row, Col, Button, Form, Input, Space, message } from "antd";
 import { MailTwoTone, LockTwoTone } from "@ant-design/icons";
 import "./login.css";
+import cmpnd from "../../assets/cmpnd.png";
 export default function Login() {
   const [messageApi, contextHolder] = message.useMessage();
 
@@ -34,9 +35,12 @@ export default function Login() {
       {contextHolder}
       <Row className="form-container">
         <Col xs={22} sm={16} md={12} lg={8}>
+          <div className="flex justify-center">
+            <img src={cmpnd} alt="CMPND" />
+          </div>
           <Space direction="vertical" size="large" className="flex">
-            <h2 className="text-2xl text-center text-white">
-              Login to Your Account
+            <h2 className="text-2xl text-center text-white my-1">
+              Admin Login
             </h2>
             <Form
               name="login"
@@ -51,22 +55,21 @@ export default function Login() {
               >
                 <Form.Item label="Email" name="email">
                   <Input
-                    size="large"
                     placeholder="example@gmail.com"
                     prefix={<MailTwoTone />}
+                    className="py-2"
                   />
                 </Form.Item>
 
                 <Form.Item label="Password" name="password">
-                  <Input.Password size="large" prefix={<LockTwoTone />} />
+                  <Input.Password prefix={<LockTwoTone />} className="py-2" />
                 </Form.Item>
 
                 <Form.Item>
                   <Button
                     type="primary"
                     htmlType="submit"
-                    size="large"
-                    className="block w-full mt-4"
+                    className="block w-full mt-4 py-2 h-auto"
                   >
                     Login
                   </Button>
