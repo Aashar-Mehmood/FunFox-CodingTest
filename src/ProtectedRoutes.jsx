@@ -1,6 +1,7 @@
 import { Navigate, Outlet } from "react-router-dom";
-import useAuth from "./hooks/useAuth";
+import { AuthContext } from "./context/AuthContext";
+import { useContext } from "react";
 export default function ProtectedRoutes() {
-  const { user } = useAuth();
+  const { user } = useContext(AuthContext);
   return !user ? <Navigate to="/login" /> : <Outlet />;
 }
