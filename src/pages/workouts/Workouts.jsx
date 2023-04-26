@@ -118,7 +118,7 @@ export default function Workouts() {
         onClick={handleCreate}
         className="py-2 h-auto mb-4"
       >
-        Create New Workout
+        New Workout
       </Button>
       <div className="bg-white p-4 shadow rounded">
         <h2 className="mb-4">Workouts</h2>

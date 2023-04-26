@@ -88,7 +88,7 @@ export default function Exercises() {
   };
 
   return (
-    <div className="bg-white p-4 shadow rounded mt-4 md:max-w-xl">
+    <div className="bg-white p-4 shadow rounded mt-4">
       <h2 className="mb-4">Exercises</h2>
       <Table columns={exerciseColumns} dataSource={exerciseData} />
     </div>

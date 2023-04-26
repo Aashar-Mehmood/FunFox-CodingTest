@@ -5,7 +5,7 @@ import Login from "./pages/login/Login";
 import Dashboard from "./pages/dashboard/Dashboard";
 import Workouts from "./pages/workouts/Workouts";
 import Settings from "./pages/settings/Settings";
-import AddExercise from "./pages/workouts/AddExercise";
+import AddExercise from "./pages/exercises/AddExercise";
 import Exercises from "./pages/exercises/Exercises";
 export default function Routes({ children }) {
   const routes = createBrowserRouter([

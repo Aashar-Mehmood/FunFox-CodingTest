@@ -16,10 +16,7 @@ export default function DashboardLayout() {
       <Layout>
         <Sider
           width={250}
-          style={{
-            background: colorBgContainer,
-          }}
-          className="self-start px-2 py-6"
+          className="self-start px-2 py-6 shadow rounded bg-white"
         >
           <SideMenu />
         </Sider>

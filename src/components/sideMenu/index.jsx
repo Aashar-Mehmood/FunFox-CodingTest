@@ -21,7 +21,6 @@ export default function SideMenu() {
     <Menu
       mode="vertical"
       onClick={(item) => {
-        //item.key
         navigate(item.key);
       }}
       selectedKeys={[selectedKeys]}
