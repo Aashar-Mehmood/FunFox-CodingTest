@@ -15,7 +15,7 @@ export default function DashboardLayout() {
       </Header>
       <Layout>
         <Sider
-          width={200}
+          width={250}
           style={{
             background: colorBgContainer,
           }}
@@ -26,20 +26,16 @@ export default function DashboardLayout() {
         <Layout className="p-6">
           <Content
             style={{
-              padding: 24,
               margin: 0,
               minHeight: 280,
-              background: colorBgContainer,
             }}
+            className="px-6"
           >
             <Outlet />
           </Content>
         </Layout>
       </Layout>
-      <Footer
-        className="mt-2 shadow "
-        style={{ background: colorBgContainer }}
-      >
+      <Footer className="mt-2 shadow" style={{ background: colorBgContainer }}>
         <AppFooter />
       </Footer>
     </Layout>

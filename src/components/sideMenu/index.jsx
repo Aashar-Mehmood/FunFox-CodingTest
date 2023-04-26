@@ -19,7 +19,6 @@ export default function SideMenu() {
   const navigate = useNavigate();
   return (
     <Menu
-      className="SideMenuVertical"
       mode="vertical"
       onClick={(item) => {
         //item.key
@@ -33,13 +32,13 @@ export default function SideMenu() {
           key: "/",
         },
         {
-          label: "Inventory",
-          key: "/inventory",
+          label: "Workouts",
+          key: "/workouts",
           icon: <ShopOutlined />,
         },
         {
-          label: "Orders",
-          key: "/orders",
+          label: "Exercises",
+          key: "/exercises",
           icon: <ShoppingCartOutlined />,
         },
         {

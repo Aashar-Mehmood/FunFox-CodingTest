@@ -1,9 +1,12 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import ProtectedRoutes from "./ProtectedRoutes";
 import App from "./App";
-import Dashboard from "./pages/dashboard/dashboard";
 import Login from "./pages/login/Login";
+import Dashboard from "./pages/dashboard/Dashboard";
+import Workouts from "./pages/workouts/Workouts";
 import Settings from "./pages/settings/Settings";
+import AddExercise from "./pages/workouts/AddExercise";
+import Exercises from "./pages/exercises/Exercises";
 export default function Routes({ children }) {
   const routes = createBrowserRouter([
     {
@@ -22,6 +25,18 @@ export default function Routes({ children }) {
               path: "/",
               index: true,
               element: <Dashboard />,
+            },
+            {
+              path: "/workouts",
+              element: <Workouts />,
+            },
+            {
+              path: "/exercises",
+              element: <Exercises />,
+            },
+            {
+              path: "/workouts/:id/addExercise",
+              element: <AddExercise />,
             },
             {
               path: "/settings",
