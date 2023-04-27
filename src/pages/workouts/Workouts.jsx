@@ -2,90 +2,90 @@ import React, { useState } from "react";
 import { Table, Tag, Button, Modal, Form, Input } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
 import { Link } from "react-router-dom";
-
-const workoutColumns = [
-  {
-    title: "Name",
-    dataIndex: "name",
-    key: "name",
-  },
-  {
-    title: "Add Exercise",
-    key: "addExercise",
-    render: (record) => (
-      <Link
-        className="p-2 border rounded bg-blue-500 text-white"
-        to={`/workouts/${record.key}/addExercise`}
-      >
-        Add Exercise
-      </Link>
-    ),
-  },
-  {
-    title: "Tags",
-    dataIndex: "tags",
-    key: "tags",
-    render: (tags) => (
-      <>
-        {tags.map((tag) => {
-          return (
-            <Tag color="blue" key={tag}>
-              {tag.toUpperCase()}
-            </Tag>
-          );
-        })}
-      </>
-    ),
-  },
-  {
-    title: "Action",
-    key: "action",
-    render: (text, record) => (
-      <span>
-        <Button
-          type="primary"
-          className="mr-4"
-          onClick={() => handleEdit(record)}
-        >
-          Edit
-        </Button>
-        <Button danger onClick={() => handleDelete(record)}>
-          Delete
-        </Button>
-      </span>
-    ),
-  },
-];
-
 const workoutData = [
   {
     key: "1",
     name: "Workout 1",
+    description:
+      "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Reiciendis modi omnis ex recusandae quasi optio cumque quisquam id dicta dolor.",
     tags: ["tag1", "tag2"],
   },
   {
     key: "2",
     name: "Workout 2",
+    description:
+      "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Reiciendis modi omnis ex recusandae quasi optio cumque quisquam id dicta dolor.",
     tags: ["tag1", "tag3"],
   },
   {
     key: "3",
     name: "Workout 3",
+    description:
+      "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Reiciendis modi omnis ex recusandae quasi optio cumque quisquam id dicta dolor.",
     tags: ["tag2", "tag3"],
   },
 ];
-
 export default function Workouts() {
+  const workoutColumns = [
+    {
+      title: "Name",
+      dataIndex: "name",
+      key: "name",
+    },
+    Table.EXPAND_COLUMN,
+    {
+      title: "Add Exercise",
+      key: "addExercise",
+      render: (record) => (
+        <Link
+          className="p-2 border rounded bg-blue-500 text-white"
+          to={`/workouts/${record.key}/addExercise`}
+        >
+          Add Exercise
+        </Link>
+      ),
+    },
+    {
+      title: "Tags",
+      dataIndex: "tags",
+      key: "tags",
+      render: (tags) => (
+        <>
+          {tags.map((tag) => {
+            return (
+              <Tag color="blue" key={tag}>
+                {tag.toUpperCase()}
+              </Tag>
+            );
+          })}
+        </>
+      ),
+    },
+    {
+      title: "Action",
+      key: "action",
+      render: (text, record) => (
+        <span>
+          <Link
+            to={`/workouts/${record.key}/edit`}
+            state={{ ...record }}
+            className="mr-4"
+          >
+            <Button type="primary">Edit</Button>
+          </Link>
+          <Button danger onClick={() => handleDelete(record)}>
+            Delete
+          </Button>
+        </span>
+      ),
+    },
+  ];
+
   const [workouts, setWorkouts] = useState(workoutData);
   const [open, setOpen] = useState(false);
   const [form] = Form.useForm();
 
   const handleCreate = () => {
-    setOpen(true);
-  };
-
-  const handleEdit = (record) => {
-    form.setFieldsValue(record);
     setOpen(true);
   };
 
@@ -122,7 +122,22 @@ export default function Workouts() {
       </Button>
       <div className="bg-white p-4 shadow rounded">
         <h2 className="mb-4">Workouts</h2>
-        <Table columns={workoutColumns} dataSource={workoutData} />
+        <Table
+          expandable={{
+            columnTitle: "Description",
+            expandedRowRender: (record) => (
+              <p
+                style={{
+                  margin: 0,
+                }}
+              >
+                {record.description}
+              </p>
+            ),
+          }}
+          columns={workoutColumns}
+          dataSource={workoutData}
+        />
       </div>
       <Modal
         title="Create New Workout"

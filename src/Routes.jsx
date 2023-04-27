@@ -7,6 +7,7 @@ import Workouts from "./pages/workouts/Workouts";
 import Settings from "./pages/settings/Settings";
 import AddExercise from "./pages/exercises/AddExercise";
 import Exercises from "./pages/exercises/Exercises";
+import EditWorkout from "./pages/workouts/EditWorkout";
 export default function Routes({ children }) {
   const routes = createBrowserRouter([
     {
@@ -29,6 +30,10 @@ export default function Routes({ children }) {
             {
               path: "/workouts",
               element: <Workouts />,
+            },
+            {
+              path: "/workouts/:id/edit",
+              element: <EditWorkout />,
             },
             {
               path: "/exercises",

@@ -58,6 +58,8 @@ const exerciseData = [
   },
 ];
 export default function Dashbaord() {
+  // useEffect to fetch general stats and latest exercises
+  // then setStats and setExercises to response
   const [exercises, setExercises] = useState(exerciseData);
   return (
     <>
