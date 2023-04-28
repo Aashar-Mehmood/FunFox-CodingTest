@@ -8,6 +8,7 @@ import Settings from "./pages/settings/Settings";
 import AddExercise from "./pages/exercises/AddExercise";
 import Exercises from "./pages/exercises/Exercises";
 import EditWorkout from "./pages/workouts/EditWorkout";
+import EditExercise from "./pages/exercises/EditExercise";
 export default function Routes({ children }) {
   const routes = createBrowserRouter([
     {
@@ -36,16 +37,19 @@ export default function Routes({ children }) {
               element: <EditWorkout />,
             },
             {
-              path: "/exercises",
-              element: <Exercises />,
-            },
-            {
               path: "/workouts/:id/addExercise",
               element: <AddExercise />,
             },
             {
+              path: "/exercises",
+              element: <Exercises />,
+            },
+            {
+              path: "/exercises/:id/edit",
+              element: <EditExercise />,
+            },
+            {
               path: "/settings",
-              index: true,
               element: <Settings />,
             },
           ],

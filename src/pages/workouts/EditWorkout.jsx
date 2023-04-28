@@ -1,4 +1,5 @@
-import { Form, Input, Button } from "antd";
+import { UploadOutlined } from "@ant-design/icons";
+import { Form, Input, Button, Upload } from "antd";
 import { useLocation } from "react-router-dom";
 export default function EditWorkout() {
   const [form] = Form.useForm();
@@ -11,7 +12,6 @@ export default function EditWorkout() {
     tags: tags.join(", "),
   });
 
-  console.log(location.state);
   const onFinish = (values) => {
     console.log(values);
   };
@@ -36,7 +36,14 @@ export default function EditWorkout() {
         <Form.Item className="mb-6" label="Tags" name="tags">
           <Input className="py-2" />
         </Form.Item>
-        <Form.Item className="mb-6">
+        <Form.Item className="mb-6" label="Image" name="image">
+          <Upload accept="image/*" maxCount={1}>
+            <Button className="py-2 h-auto" icon={<UploadOutlined />}>
+              Choose New Image
+            </Button>
+          </Upload>
+        </Form.Item>
+        <Form.Item className="mt-10 mb-6">
           <Button type="primary" htmlType="submit" className="h-auto px-6 py-2">
             Update
           </Button>

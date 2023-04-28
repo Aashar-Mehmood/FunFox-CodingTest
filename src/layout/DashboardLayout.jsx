@@ -1,8 +1,8 @@
 import { Layout, theme } from "antd";
-import AppHeader from "../components/appHeader";
-import SideMenu from "../components/sideMenu";
+import AppHeader from "../components/appHeader/AppHeader";
+import SideMenu from "../components/sideMenu/SideMenu";
 import { Outlet } from "react-router-dom";
-import AppFooter from "../components/appFooter";
+import AppFooter from "../components/appFooter/AppFooter";
 const { Header, Sider, Content, Footer } = Layout;
 export default function DashboardLayout() {
   const {
@@ -32,7 +32,10 @@ export default function DashboardLayout() {
           </Content>
         </Layout>
       </Layout>
-      <Footer className="mt-2 shadow" style={{ background: colorBgContainer }}>
+      <Footer
+        className="mt-2 shadow py-4"
+        style={{ background: colorBgContainer }}
+      >
         <AppFooter />
       </Footer>
     </Layout>

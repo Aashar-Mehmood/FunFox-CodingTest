@@ -1,9 +1,19 @@
-import { useParams } from "react-router-dom";
-import { Form, Input, InputNumber, Button, Upload } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
-export default function AddExercise() {
-  const { id } = useParams();
+import { Form, Input, Button, Upload, InputNumber } from "antd";
+import { useLocation } from "react-router-dom";
+export default function EditExercise() {
   const [form] = Form.useForm();
+  const location = useLocation();
+  const { key, name, description, sets, reps, time } = location.state;
+
+  form.setFieldsValue({
+    name,
+    description,
+    sets,
+    reps,
+    time,
+  });
+
   const onFinish = (values) => {
     console.log(values);
   };
@@ -12,7 +22,7 @@ export default function AddExercise() {
   };
   return (
     <div className="bg-white p-8 shadow rounded lg:max-w-2xl xl:max-w-lg">
-      <h2> Add Exercise to Workout {id} </h2>
+      <h2> Edit Exercise {name} </h2>
       <Form form={form} layout="vertical" onFinish={onFinish}>
         <Form.Item
           className="mb-6"
@@ -39,7 +49,7 @@ export default function AddExercise() {
         <Form.Item className="mb-10" label="Image" name="image">
           <Upload accept="image/*" maxCount={1}>
             <Button className="py-2 h-auto" icon={<UploadOutlined />}>
-              Upload Exercise Image
+              Upload New Image
             </Button>
           </Upload>
         </Form.Item>
