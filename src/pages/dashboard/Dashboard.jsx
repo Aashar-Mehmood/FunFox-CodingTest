@@ -76,12 +76,51 @@ const workoutData = [
   },
 ];
 
+const exerciseData = [
+  {
+    key: "1",
+    name: "Push Ups",
+    description:
+      "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Reiciendis modi omnis ex recusandae quasi optio cumque quisquam id dicta dolor.",
+
+    workoutName: "Chest",
+    sets: 10,
+    reps: 4,
+    time: 20,
+    image: back,
+  },
+  {
+    key: "2",
+    name: "Bench Press",
+    description:
+      "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Reiciendis modi omnis ex recusandae quasi optio cumque quisquam id dicta dolor.",
+
+    workoutName: "Arms",
+    sets: 6,
+    reps: 3,
+    time: 15,
+    image: back,
+  },
+  {
+    key: "3",
+    name: "Pull Ups",
+    description:
+      "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Reiciendis modi omnis ex recusandae quasi optio cumque quisquam id dicta dolor.",
+
+    workoutName: "Arms",
+    sets: 8,
+    reps: 7,
+    time: 20,
+    image: back,
+  },
+];
 const exerciseColumns = [
   {
     title: "Name",
     dataIndex: "name",
     key: "name",
   },
+  Table.EXPAND_COLUMN,
   {
     title: "Workout Name",
     dataIndex: "workoutName",
@@ -102,32 +141,12 @@ const exerciseColumns = [
     key: "time",
     dataIndex: "time",
   },
-];
-
-const exerciseData = [
   {
-    key: "1",
-    name: "Push Ups",
-    workoutName: "Chest",
-    sets: 10,
-    reps: 4,
-    time: 20,
-  },
-  {
-    key: "2",
-    name: "Bench Press",
-    workoutName: "Arms",
-    sets: 6,
-    reps: 3,
-    time: 15,
-  },
-  {
-    key: "3",
-    name: "Pull Ups",
-    workoutName: "Arms",
-    sets: 8,
-    reps: 7,
-    time: 20,
+    title: "Image",
+    key: "image",
+    render: (record) => (
+      <img src={record.image} className="w-8 h-8" alt="exercise image" />
+    ),
   },
 ];
 export default function Dashbaord() {
@@ -195,6 +214,18 @@ export default function Dashbaord() {
           bordered
           scroll={{
             x: 700,
+          }}
+          expandable={{
+            columnTitle: "Description",
+            expandedRowRender: (record) => (
+              <p
+                style={{
+                  margin: 0,
+                }}
+              >
+                {record.description}
+              </p>
+            ),
           }}
           columns={exerciseColumns}
           dataSource={exercises}

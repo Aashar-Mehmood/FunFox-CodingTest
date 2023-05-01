@@ -5,6 +5,7 @@ import dashboard from "../../assets/menu_icons/dashboard.png";
 import workout from "../../assets/menu_icons/workout.png";
 import exercise from "../../assets/menu_icons/fitness.png";
 import logout from "../../assets/menu_icons/logout.png";
+import useAuth from "../../hooks/useAuth";
 const items = [
   {
     label: "Dashboard",
@@ -30,17 +31,26 @@ const items = [
 export default function SideMenu() {
   const location = useLocation();
   const [selectedKeys, setSelectedKeys] = useState("/");
+  const { user, setUser } = useAuth();
   useEffect(() => {
     const pathName = location.pathname;
     setSelectedKeys(pathName);
   }, [location.pathname]);
 
   const navigate = useNavigate();
+  function handleLogout() {
+    // here firebase sdk logout function
+    setUser(false);
+  }
   return (
     <Menu
       mode="vertical"
       onClick={(item) => {
-        navigate(item.key);
+        if (item.key === "/logout") {
+          handleLogout();
+        } else {
+          navigate(item.key);
+        }
       }}
       selectedKeys={[selectedKeys]}
       items={items}
