@@ -1,54 +1,9 @@
 import React, { useState } from "react";
-import {
-  Table,
-  Tag,
-  Button,
-  Modal,
-  Form,
-  Input,
-  Upload,
-  Popconfirm,
-} from "antd";
-import { PlusOutlined, UploadOutlined } from "@ant-design/icons";
+import { Table, Tag, Button, Popconfirm } from "antd";
+import { PlusOutlined } from "@ant-design/icons";
 import { Link } from "react-router-dom";
-import abs from "../../assets/abs.png";
-import arms from "../../assets/arms.png";
-import back from "../../assets/back.png";
-import chest from "../../assets/chest.png";
-const workoutData = [
-  {
-    key: "1",
-    name: "Abs",
-    description:
-      "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Reiciendis modi omnis ex recusandae quasi optio cumque quisquam id dicta dolor.",
-    tags: ["tag1", "tag2"],
-    image: abs,
-  },
-  {
-    key: "2",
-    name: "Arms",
-    description:
-      "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Reiciendis modi omnis ex recusandae quasi optio cumque quisquam id dicta dolor.",
-    tags: ["tag1", "tag3"],
-    image: arms,
-  },
-  {
-    key: "3",
-    name: "Back",
-    description:
-      "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Reiciendis modi omnis ex recusandae quasi optio cumque quisquam id dicta dolor.",
-    tags: ["tag2", "tag3"],
-    image: back,
-  },
-  {
-    key: "4",
-    name: "Chest",
-    description:
-      "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Reiciendis modi omnis ex recusandae quasi optio cumque quisquam id dicta dolor.",
-    tags: ["tag2", "tag3", "tag4"],
-    image: chest,
-  },
-];
+import useData from "../../hooks/useData";
+import AddWorkoutModal from "../../components/modals/addWorkoutModal";
 export default function Workouts() {
   const workoutColumns = [
     {
@@ -75,10 +30,10 @@ export default function Workouts() {
       key: "tags",
       render: (tags) => (
         <>
-          {tags.map((tag) => {
+          {tags.split(",").map((tag) => {
             return (
               <Tag color="blue" key={tag}>
-                {tag.toUpperCase()}
+                {tag.trim().toUpperCase()}
               </Tag>
             );
           })}
@@ -119,25 +74,11 @@ export default function Workouts() {
     },
   ];
 
-  const [workouts, setWorkouts] = useState(workoutData);
+  const { workouts, setWorkouts } = useData();
   const [open, setOpen] = useState(false);
-  const [form] = Form.useForm();
 
   const confirmDelete = (key) => {
-    console.log(key);
     setWorkouts(workouts.filter((item) => item.key !== key));
-  };
-
-  const handleCreate = () => {
-    form.validateFields().then((values) => {
-      const newWorkout = {
-        key: Date.now(),
-        ...values,
-      };
-      setWorkouts([...workouts, newWorkout]);
-      form.resetFields();
-      setOpen(false);
-    });
   };
 
   return (
@@ -167,42 +108,7 @@ export default function Workouts() {
           dataSource={workouts}
         />
       </div>
-      <Modal
-        title="Create New Workout"
-        open={open}
-        onOk={handleCreate}
-        onCancel={() => {
-          form.resetFields();
-          setOpen(false);
-        }}
-        okButtonProps={{ className: "px-8 py-2 h-auto ml-8" }}
-        cancelButtonProps={{ className: "px-6 py-2 h-auto " }}
-        okText="Create"
-      >
-        <Form form={form} layout="vertical" className="my-4">
-          <Form.Item
-            className="mb-6"
-            label="Name"
-            name="name"
-            rules={[{ required: true, message: "Please enter workout name" }]}
-          >
-            <Input className="py-2" />
-          </Form.Item>
-          <Form.Item className="mb-6" label="Description" name="description">
-            <Input.TextArea className="py-2" />
-          </Form.Item>
-          <Form.Item className="mb-6" label="Comma Separated Tags" name="tags">
-            <Input className="py-2" placeholder="Tag1, Tag2, Tag3" />
-          </Form.Item>
-          <Form.Item className="mb-6" label="Image" name="image">
-            <Upload accept="image/*" maxCount={1}>
-              <Button className="py-2 h-auto" icon={<UploadOutlined />}>
-                Upload Workout Image
-              </Button>
-            </Upload>
-          </Form.Item>
-        </Form>
-      </Modal>
+      <AddWorkoutModal open={open} setOpen={setOpen} />
     </>
   );
 }

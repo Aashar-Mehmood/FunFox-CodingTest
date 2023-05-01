@@ -7,7 +7,7 @@ export default function AuthProvider(props) {
   const [loading, setLoading] = useState(false);
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(firebaseAuth, (user) => {
-      setUser(false);
+      setUser(true);
       setLoading(false);
     });
     return unsubscribe;

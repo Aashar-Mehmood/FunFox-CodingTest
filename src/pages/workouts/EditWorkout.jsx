@@ -15,9 +15,7 @@ export default function EditWorkout() {
   const onFinish = (values) => {
     console.log(values);
   };
-  const onReset = () => {
-    form.resetFields();
-  };
+
   return (
     <div className="bg-white p-8 shadow rounded lg:max-w-2xl xl:max-w-lg">
       <h2> Edit Workout {key} </h2>
@@ -49,7 +47,7 @@ export default function EditWorkout() {
           </Button>
           <Button
             htmlType="button"
-            onClick={onReset}
+            onClick={() => form.resetFields()}
             className="h-auto px-6 py-2 ml-4"
           >
             Reset
