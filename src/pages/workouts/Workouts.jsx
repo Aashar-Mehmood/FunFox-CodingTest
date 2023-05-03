@@ -3,7 +3,7 @@ import { Table, Tag, Button, Popconfirm } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
 import { Link } from "react-router-dom";
 import useData from "../../hooks/useData";
-import AddWorkoutModal from "../../components/modals/addWorkoutModal";
+import AddWorkoutModal from "../../components/modals/AddWorkoutModal";
 export default function Workouts() {
   const workoutColumns = [
     {
@@ -30,7 +30,7 @@ export default function Workouts() {
       key: "tags",
       render: (tags) => (
         <>
-          {tags.split(",").map((tag) => {
+          {tags?.split(",").map((tag) => {
             return (
               <Tag color="blue" key={tag}>
                 {tag.trim().toUpperCase()}
@@ -43,9 +43,15 @@ export default function Workouts() {
     {
       title: "Image",
       key: "image",
-      render: (text, record) => (
-        <img src={record.image} alt="text" className="w-8" />
-      ),
+      render: (text, record) => {
+        {
+          return record.image ? (
+            <img src={record.image} alt="---" className="w-8 h-8" />
+          ) : (
+            <p>---</p>
+          );
+        }
+      },
     },
     {
       title: "Action",

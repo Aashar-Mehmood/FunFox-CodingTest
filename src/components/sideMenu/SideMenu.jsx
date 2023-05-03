@@ -6,6 +6,7 @@ import workout from "../../assets/menu_icons/workout.png";
 import exercise from "../../assets/menu_icons/fitness.png";
 import logout from "../../assets/menu_icons/logout.png";
 import useAuth from "../../hooks/useAuth";
+
 const items = [
   {
     label: "Dashboard",
@@ -40,6 +41,7 @@ export default function SideMenu() {
   const navigate = useNavigate();
   function handleLogout() {
     // here firebase sdk logout function
+    navigate("/login", { state: { from: "/" } });
     setUser(false);
   }
   return (

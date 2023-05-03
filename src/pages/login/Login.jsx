@@ -47,16 +47,20 @@ export default function Login() {
     return (
       <section id="login-container">
         {contextHolder}
-        <Row className="form-container">
+        <Row className="form-container" data-testid="container">
           <Col xs={22} sm={16} md={12} lg={8}>
             <div className="flex justify-center">
-              <img src={cmpnd} alt="CMPND" />
+              <img src={cmpnd} alt="CMPND" role="img" />
             </div>
             <Space direction="vertical" size="large" className="flex">
-              <h2 className="text-2xl text-center text-white my-1">
+              <h2
+                className="text-2xl text-center text-white my-1"
+                role="heading"
+              >
                 Admin Login
               </h2>
               <Form
+                role="form"
                 name="login"
                 layout="vertical"
                 onFinish={onFinish}
@@ -81,6 +85,8 @@ export default function Login() {
 
                   <Form.Item>
                     <Button
+                      role="button"
+                      name="login"
                       type="primary"
                       htmlType="submit"
                       className="block w-full mt-4 py-2 h-auto"

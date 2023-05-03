@@ -1,13 +1,8 @@
-import { Card, Col, Row, Table, Tag } from "antd";
+import { Col, Row, Table, Tag } from "antd";
 import dumbel from "../../assets/dumbbell.png";
 import runner from "../../assets/runner.png";
 import user from "../../assets/profile.png";
 
-import abs from "../../assets/abs.png";
-import arms from "../../assets/arms.png";
-import back from "../../assets/back.png";
-import chest from "../../assets/chest.png";
-import { useState } from "react";
 import DashboardCard from "../../components/cards/dashboardCard";
 import useData from "../../hooks/useData";
 
@@ -24,7 +19,7 @@ const workoutColumns = [
     key: "tags",
     render: (tags) => (
       <>
-        {tags.split(",").map((tag) => {
+        {tags?.split(",").map((tag) => {
           return (
             <Tag color="blue" key={tag}>
               {tag.trim().toUpperCase()}
@@ -37,9 +32,15 @@ const workoutColumns = [
   {
     title: "Image",
     key: "image",
-    render: (text, record) => (
-      <img src={record.image} alt="text" className="w-8" />
-    ),
+    render: (text, record) => {
+      {
+        return record.image ? (
+          <img src={record.image} alt="---" className="w-8 h-8" />
+        ) : (
+          <p>---</p>
+        );
+      }
+    },
   },
 ];
 
@@ -73,17 +74,21 @@ const exerciseColumns = [
   {
     title: "Image",
     key: "image",
-    render: (record) => (
-      <img src={record.image} className="w-8 h-8" alt="exercise image" />
-    ),
+    render: (text, record) => {
+      {
+        return record.image ? (
+          <img src={record.image} alt="---" className="w-8 h-8" />
+        ) : (
+          <p>---</p>
+        );
+      }
+    },
   },
 ];
 export default function Dashbaord() {
   // useEffect to fetch general stats and latest exercises
   // then setStats and setExercises to response
   const { workouts, exercises } = useData();
-
-  console.log(useData());
 
   return (
     <>

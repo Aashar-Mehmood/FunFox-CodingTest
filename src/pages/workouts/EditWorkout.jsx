@@ -1,23 +1,50 @@
 import { UploadOutlined } from "@ant-design/icons";
-import { Form, Input, Button, Upload } from "antd";
-import { useLocation } from "react-router-dom";
+import { Form, Input, Button, Upload, message } from "antd";
+import { useNavigate, useLocation } from "react-router-dom";
+import useData from "../../hooks/useData";
+import { useEffect } from "react";
 export default function EditWorkout() {
   const [form] = Form.useForm();
   const location = useLocation();
-  const { key, name, description, tags } = location.state;
+  const navigate = useNavigate();
+  const { key, name, description, tags } = location?.state;
+  const { workouts, setWorkouts } = useData();
+  const [messageApi, contextHolder] = message.useMessage();
 
-  form.setFieldsValue({
-    name,
-    description,
-    tags: tags.join(", "),
-  });
+  useEffect(() => {
+    form.setFieldsValue({
+      name,
+      description,
+      tags,
+    });
+  }, []);
 
   const onFinish = (values) => {
-    console.log(values);
+    const updatedWorkout = {
+      key,
+      ...values,
+    };
+    setWorkouts((prevWorkouts) => {
+      return prevWorkouts.map((workout) => {
+        if (workout.key === key) {
+          return {
+            ...updatedWorkout,
+          };
+        } else {
+          return workout;
+        }
+      });
+    });
+    messageApi.open({
+      type: "success",
+      content: "Workout updated",
+      onClose: () => navigate("/workouts"),
+    });
   };
 
   return (
     <div className="bg-white p-8 shadow rounded lg:max-w-2xl xl:max-w-lg">
+      <>{contextHolder}</>
       <h2> Edit Workout {key} </h2>
       <Form form={form} layout="vertical" onFinish={onFinish}>
         <Form.Item

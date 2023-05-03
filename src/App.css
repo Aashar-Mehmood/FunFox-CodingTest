@@ -7,10 +7,11 @@ body {
 }
 
 :where(
-    .css-dev-only-do-not-override-htwhyh
+    .css-dev-only-do-not-override-yp8pcc
   ).ant-menu-light.ant-menu-root.ant-menu-vertical {
-  border: 0 !important;
+  border-inline-end: 0 !important;
 }
+
 :where(.css-dev-only-do-not-override-htwhyh).ant-input,
 :where(.css-dev-only-do-not-override-htwhyh).ant-input-number,
 :where(.css-dev-only-do-not-override-htwhyh).ant-btn-default {

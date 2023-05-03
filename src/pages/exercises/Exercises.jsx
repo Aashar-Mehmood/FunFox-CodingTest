@@ -35,9 +35,15 @@ export default function Exercises() {
     {
       title: "Image",
       key: "image",
-      render: (record) => (
-        <img src={record.image} className="w-8 h-8" alt="exercise image" />
-      ),
+      render: (text, record) => {
+        {
+          return record.image ? (
+            <img src={record.image} alt="---" className="w-8 h-8" />
+          ) : (
+            <p>---</p>
+          );
+        }
+      },
     },
     {
       title: "Action",

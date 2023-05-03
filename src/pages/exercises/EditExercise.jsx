@@ -1,27 +1,57 @@
 import { UploadOutlined } from "@ant-design/icons";
-import { Form, Input, Button, Upload, InputNumber } from "antd";
-import { useLocation } from "react-router-dom";
+import { Form, Input, Button, Upload, InputNumber, message } from "antd";
+import { useLocation, useNavigate } from "react-router-dom";
+import useData from "../../hooks/useData";
+import { useEffect } from "react";
 export default function EditExercise() {
   const [form] = Form.useForm();
   const location = useLocation();
-  const { key, name, description, sets, reps, time } = location.state;
+  const navigate = useNavigate();
+  const { exercises, setExercises } = useData();
+  const { key, name, description, workoutName, sets, reps, time } =
+    location.state;
+  const [messageApi, contextHolder] = message.useMessage();
 
-  form.setFieldsValue({
-    name,
-    description,
-    sets,
-    reps,
-    time,
-  });
+  useEffect(() => {
+    form.setFieldsValue({
+      name,
+      description,
+      sets,
+      reps,
+      time,
+    });
+  }, []);
 
   const onFinish = (values) => {
-    console.log(values);
+    const updatedExercise = {
+      key,
+      workoutName,
+      ...values,
+    };
+    setExercises((prevExercises) => {
+      return prevExercises.map((exercise) => {
+        if (exercise.key === key) {
+          return {
+            ...updatedExercise,
+          };
+        } else {
+          return exercise;
+        }
+      });
+    });
+    messageApi.open({
+      type: "success",
+      content: "Exercise updated",
+      onClose: () => navigate("/exercises"),
+    });
   };
   const onReset = () => {
     form.resetFields();
   };
+
   return (
     <div className="bg-white p-8 shadow rounded lg:max-w-2xl xl:max-w-lg">
+      {contextHolder}
       <h2> Edit Exercise {name} </h2>
       <Form form={form} layout="vertical" onFinish={onFinish}>
         <Form.Item
