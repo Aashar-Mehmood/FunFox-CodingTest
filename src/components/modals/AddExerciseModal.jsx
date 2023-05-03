@@ -8,11 +8,13 @@ export default function AddExerciseModal(props) {
   const [form] = Form.useForm();
   const handleCreate = () => {
     form.validateFields().then((values) => {
+      console.log(values);
       const newExercise = {
         key: Date.now(),
         ...values,
       };
       setExercises([...exercises, newExercise]);
+      console.log(exercises);
       form.resetFields();
       setOpen(false);
     });
@@ -43,16 +45,17 @@ export default function AddExerciseModal(props) {
         <Form.Item className="mb-4" label="Description" name="description">
           <Input.TextArea className="py-2" />
         </Form.Item>
-        <Form.Item className="mb-4" label="Workout" name="workout">
-          <Select placeholder="Select a workout">
-            {workouts.map((workout) => {
-              return (
-                <Select.Option value={workout.key} key={workout.key}>
-                  {workout.name}
-                </Select.Option>
-              );
+        <Form.Item className="mb-4" label="Workout" name="workoutName">
+          <Select
+            placeholder="Select a workout"
+            options={workouts.map((workout) => {
+              return {
+                label: workout.name,
+                key: workout.key,
+                value: workout.name,
+              };
             })}
-          </Select>
+          />
         </Form.Item>
         <div className="flex justify-between mb-4">
           <Form.Item className="mb-0" label="Sets" name="sets">

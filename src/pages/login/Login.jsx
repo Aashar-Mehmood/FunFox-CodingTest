@@ -5,6 +5,7 @@ import "./login.css";
 import cmpnd from "../../assets/cmpnd.png";
 import useAuth from "../../hooks/useAuth";
 import { Navigate, useLocation } from "react-router-dom";
+import { adminLogin } from "../../services/auth";
 export default function Login() {
   const [messageApi, contextHolder] = message.useMessage();
   const { user, setUser } = useAuth();
@@ -32,14 +33,9 @@ export default function Login() {
     ) {
       showMessage("error", "Invalid Email");
     } else {
-      handleLogin(email, password);
+      adminLogin(email, password);
     }
   };
-
-  function handleLogin(email, password) {
-    // here login with firebase sdk
-    setUser(true);
-  }
 
   if (user) {
     return <Navigate to={from} />;
