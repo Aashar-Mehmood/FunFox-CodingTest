@@ -6,7 +6,7 @@ import workout from "../../assets/menu_icons/workout.png";
 import exercise from "../../assets/menu_icons/fitness.png";
 import logout from "../../assets/menu_icons/logout.png";
 import useAuth from "../../hooks/useAuth";
-import { adminLogout } from "../../services/auth";
+import { userLogout } from "../../services/auth";
 const items = [
   {
     label: "Dashboard",
@@ -40,7 +40,7 @@ export default function SideMenu() {
 
   const navigate = useNavigate();
   function handleLogout() {
-    adminLogout();
+    userLogout();
   }
   return (
     <Menu

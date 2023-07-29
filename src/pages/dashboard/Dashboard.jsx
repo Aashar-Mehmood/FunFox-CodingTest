@@ -2,48 +2,8 @@ import { Col, Row, Table, Tag } from "antd";
 import dumbel from "../../assets/dumbbell.png";
 import runner from "../../assets/runner.png";
 import user from "../../assets/profile.png";
-
-import DashboardCard from "../../components/cards/dashboardCard";
 import useData from "../../hooks/useData";
-
-const workoutColumns = [
-  {
-    title: "Name",
-    dataIndex: "name",
-    key: "name",
-  },
-  Table.EXPAND_COLUMN,
-  {
-    title: "Tags",
-    dataIndex: "tags",
-    key: "tags",
-    render: (tags) => (
-      <>
-        {tags?.split(",").map((tag) => {
-          return (
-            <Tag color="blue" key={tag}>
-              {tag.trim().toUpperCase()}
-            </Tag>
-          );
-        })}
-      </>
-    ),
-  },
-  {
-    title: "Image",
-    key: "image",
-    render: (text, record) => {
-      {
-        return record.image ? (
-          <img src={record.image} alt="---" className="w-8 h-8" />
-        ) : (
-          <p>---</p>
-        );
-      }
-    },
-  },
-];
-
+import DashboardCard from "../../components/cards/DashboardCard";
 const exerciseColumns = [
   {
     title: "Name",
@@ -51,26 +11,6 @@ const exerciseColumns = [
     key: "name",
   },
   Table.EXPAND_COLUMN,
-  {
-    title: "Workout Name",
-    dataIndex: "workoutName",
-    key: "workoutName",
-  },
-  {
-    title: "Sets",
-    dataIndex: "sets",
-    key: "sets",
-  },
-  {
-    title: "Reps",
-    dataIndex: "reps",
-    key: "reps",
-  },
-  {
-    title: "Time (min)",
-    key: "time",
-    dataIndex: "time",
-  },
   {
     title: "Image",
     key: "image",
@@ -87,8 +27,47 @@ const exerciseColumns = [
 ];
 export default function Dashbaord() {
   // useEffect to fetch general stats and latest exercises
-  // then setStats and setExercises to response
-  const { workouts, exercises } = useData();
+  // then setStats and setExercisesDataDataData to response
+  const { workoutsData, exercisesData } = useData();
+
+  const workoutColumns = [
+    {
+      title: "Name",
+      dataIndex: "name",
+      key: "name",
+    },
+    Table.EXPAND_COLUMN,
+
+    {
+      title: "Tags",
+      dataIndex: "tags",
+      key: "tags",
+      render: (tags) => (
+        <>
+          {tags?.map((tag) => {
+            return (
+              <Tag color="blue" key={tag}>
+                {tag.toUpperCase()}
+              </Tag>
+            );
+          })}
+        </>
+      ),
+    },
+    {
+      title: "Image",
+      key: "image",
+      render: (text, record) => {
+        {
+          return record.image ? (
+            <img src={record.image} alt="---" className="w-8 h-8" />
+          ) : (
+            <p>---</p>
+          );
+        }
+      },
+    },
+  ];
 
   return (
     <>
@@ -125,7 +104,7 @@ export default function Dashbaord() {
             ),
           }}
           columns={workoutColumns}
-          dataSource={workouts}
+          dataSource={workoutsData}
         />
       </div>
       <h2 className="text-2xl mt-8">Latest Exercises</h2>
@@ -148,7 +127,7 @@ export default function Dashbaord() {
             ),
           }}
           columns={exerciseColumns}
-          dataSource={exercises}
+          dataSource={exercisesData}
         />
       </div>
     </>

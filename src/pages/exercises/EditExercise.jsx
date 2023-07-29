@@ -7,28 +7,24 @@ export default function EditExercise() {
   const [form] = Form.useForm();
   const location = useLocation();
   const navigate = useNavigate();
-  const { exercises, setExercises } = useData();
-  const { key, name, description, workoutName, sets, reps, time } =
-    location.state;
+  const { exercisesData, setExercisesData } = useData();
+  const { key, name, description, sets, reps, time, image } = location.state;
   const [messageApi, contextHolder] = message.useMessage();
 
   useEffect(() => {
     form.setFieldsValue({
       name,
       description,
-      sets,
-      reps,
-      time,
     });
   }, []);
 
   const onFinish = (values) => {
     const updatedExercise = {
       key,
-      workoutName,
+      image,
       ...values,
     };
-    setExercises((prevExercises) => {
+    setExercisesData((prevExercises) => {
       return prevExercises.map((exercise) => {
         if (exercise.key === key) {
           return {
@@ -65,24 +61,22 @@ export default function EditExercise() {
         <Form.Item className="mb-6" label="Description" name="description">
           <Input.TextArea className="py-2" />
         </Form.Item>
-        <div className="flex justify-between mb-6">
-          <Form.Item className="mb-0" label="Sets" name="sets">
-            <InputNumber min={1} className="py-1" />
+
+        <div className="flex items-center mb-10">
+          <Form.Item className="" label="Image">
+            <Upload accept="image/*" maxCount={1}>
+              <Button className="py-2 h-auto" icon={<UploadOutlined />}>
+                {image ? "Choose New Image" : "Choose Image"}
+              </Button>
+            </Upload>
           </Form.Item>
-          <Form.Item className="mb-0" label="Reps" name="reps">
-            <InputNumber min={1} className="py-1" />
-          </Form.Item>
-          <Form.Item className="mb-0" label="Time (mins)" name="time">
-            <InputNumber min={1} className="py-1" />
-          </Form.Item>
+          {image && (
+            <>
+              <span className="ml-20 mr-2">Old Image </span>
+              <img src={image} alt="old Image" className="h-8" />
+            </>
+          )}
         </div>
-        <Form.Item className="mb-10" label="Image" name="image">
-          <Upload accept="image/*" maxCount={1}>
-            <Button className="py-2 h-auto" icon={<UploadOutlined />}>
-              Upload New Image
-            </Button>
-          </Upload>
-        </Form.Item>
         <Form.Item className="mb-6">
           <Button type="primary" htmlType="submit" className="h-auto px-6 py-2">
             Submit

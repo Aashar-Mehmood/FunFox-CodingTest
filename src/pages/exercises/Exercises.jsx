@@ -12,26 +12,7 @@ export default function Exercises() {
       key: "name",
     },
     Table.EXPAND_COLUMN,
-    {
-      title: "Workout Name",
-      dataIndex: "workoutName",
-      key: "workoutName",
-    },
-    {
-      title: "Sets",
-      dataIndex: "sets",
-      key: "sets",
-    },
-    {
-      title: "Reps",
-      dataIndex: "reps",
-      key: "reps",
-    },
-    {
-      title: "Time (min)",
-      key: "time",
-      dataIndex: "time",
-    },
+
     {
       title: "Image",
       key: "image",
@@ -69,23 +50,25 @@ export default function Exercises() {
       ),
     },
   ];
-  const { exercises, setExercises } = useData();
+  const { exercisesData, setExercisesData } = useData();
   const [open, setOpen] = useState(false);
 
   const confirmDelete = (key) => {
-    setExercises(exercises.filter((item) => item.key !== key));
+    setExercisesData(exercisesData.filter((item) => item.key !== key));
   };
 
   return (
     <>
-      <Button
-        type="primary"
-        icon={<PlusOutlined />}
-        onClick={() => setOpen(true)}
-        className="py-2 h-auto mb-4"
-      >
-        New Exercise
-      </Button>
+      <div className="mb-4 flex justify-between items-center">
+        <Button
+          type="primary"
+          icon={<PlusOutlined />}
+          onClick={() => setOpen(true)}
+          className="py-2 h-auto"
+        >
+          New Exercise
+        </Button>
+      </div>
       <div className="bg-white px-8 py-4 shadow rounded">
         <h2 className="mb-4">Exercises</h2>
         <Table
@@ -98,7 +81,7 @@ export default function Exercises() {
             ),
           }}
           columns={exerciseColumns}
-          dataSource={exercises}
+          dataSource={exercisesData}
         />
       </div>
       <AddExerciseModal open={open} setOpen={setOpen} />

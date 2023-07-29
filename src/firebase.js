@@ -1,17 +1,17 @@
 import { initializeApp } from "firebase/app";
 import {
-  browserLocalPersistence,
   getAuth,
   setPersistence,
+  browserLocalPersistence,
 } from "firebase/auth";
 const firebaseConfig = {
-  apiKey: "AIzaSyCWTn1e658Vl-LRX4nYRQMt24CK89Xe4P8",
-  authDomain: "cmpnd-dev.firebaseapp.com",
-  projectId: "cmpnd-dev",
-  storageBucket: "cmpnd-dev.appspot.com",
-  messagingSenderId: "869936960863",
-  appId: "1:869936960863:web:448077b2ae56437ae012ea",
-  measurementId: "G-D22SX3CJW1",
+  apiKey: "AIzaSyAQnJhuYXvn9KBnHipPjK5agnEboCKGOfE",
+  authDomain: "funfox-c6b48.firebaseapp.com",
+  projectId: "funfox-c6b48",
+  storageBucket: "funfox-c6b48.appspot.com",
+  messagingSenderId: "1004701863695",
+  appId: "1:1004701863695:web:f3ec3ff55e008aa8d6f87a",
+  measurementId: "G-VC8L6CX094",
 };
 
 // Initialize Firebase

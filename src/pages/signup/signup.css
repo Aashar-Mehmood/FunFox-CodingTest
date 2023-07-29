@@ -1,4 +1,4 @@
-#login-container {
+#signup-container {
   min-height: 100vh;
   background-image: url("../../assets/studyBg2.jpg");
   background-size: cover;
@@ -21,7 +21,7 @@
   border: 1px solid rgba(0, 0, 0, 0.3);
 }
 
-#login-container label {
+#signup-container label {
   color: white;
   font-size: 1rem;
 }

@@ -1,12 +1,12 @@
 import { createContext, useEffect, useState } from "react";
-export const AuthContext = createContext();
 import { firebaseAuth } from "../firebase";
-import { onAuthStateChanged } from "firebase/auth";
+import { onIdTokenChanged } from "firebase/auth";
+export const AuthContext = createContext();
 export default function AuthProvider(props) {
-  const [user, setUser] = useState(false);
+  const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(firebaseAuth, (user) => {
+    const unsubscribe = onIdTokenChanged(firebaseAuth, (user) => {
       setUser(user);
       setLoading(false);
     });

@@ -14,10 +14,7 @@ export default function DashboardLayout() {
         <AppHeader />
       </Header>
       <Layout>
-        <Sider
-          width={250}
-          className="self-start px-2 py-6 shadow rounded bg-white"
-        >
+        <Sider width={250} className="px-2 py-6 shadow rounded bg-white">
           <SideMenu />
         </Sider>
         <Layout className="p-6">

@@ -1,27 +1,23 @@
-import React from "react";
+import React, { useState } from "react";
 import { Row, Col, Button, Form, Input, Space, message } from "antd";
 import { MailTwoTone, LockTwoTone } from "@ant-design/icons";
-import "./login.css";
-import useAuth from "../../hooks/useAuth";
+import "./signup.css";
 import funfox from "../../assets/funFoxRm.png";
-import { Navigate, useLocation, Link } from "react-router-dom";
-import { userLogin } from "../../services/auth";
-export default function Login() {
+import useAuth from "../../hooks/useAuth";
+import { Navigate, Link } from "react-router-dom";
+import { userSignup } from "../../services/auth";
+
+export default function Signup() {
   const [messageApi, contextHolder] = message.useMessage();
   const { user, setUser } = useAuth();
-  const location = useLocation();
-  const { from } = location.state || { from: "/" };
-
-  function showMessage(type, msgText) {
+  const [creatingUser, setCreatingUser] = useState(false);
+  function showMessage(type, msgText, onclose = () => null) {
     messageApi.open({
       type: type,
       content: msgText,
+      onClose: onclose,
     });
   }
-
-  // if updating error and success msg in onFinish functions
-  // remember to also update in Login.test.js
-  // we can't use data-testid in message component of antd
 
   const onFinish = (values) => {
     const { email, password } = values;
@@ -38,33 +34,37 @@ export default function Login() {
     ) {
       showMessage("error", "Invalid Email");
     } else {
-      userLogin(email, password)
+      creatingUser(true);
+      userSignup(email, password)
         .then((response) => {
-          showMessage("success", "Logged in Successfully");
+          showMessage("success", "Registered Successfully", () => {
+            setCreatingUser(false);
+            setUser(response.user);
+          });
         })
         .catch((err) => {
-          showMessage("error", "Invalid Credentials");
+          showMessage("error", "Failed to create account");
         });
     }
   };
 
   if (user) {
-    return <Navigate to={from} />;
+    return <Navigate to="/" />;
   } else {
     return (
-      <section id="login-container" data-testid="login container">
+      <section id="signup-container" data-testid="login container">
         {contextHolder}
         <Row className="form-container" data-testid="container">
           <Col xs={22} sm={16} md={12} lg={8}>
             <div className="flex justify-center">
-              <img src={funfox} alt="funfox" role="img" />
+              <img src={funfox} alt="CMPND" role="img" />
             </div>
             <Space direction="vertical" size="large" className="flex">
               <h2
                 className="text-2xl text-center text-white my-1"
                 role="heading"
               >
-                Login
+                Create a New Account
               </h2>
               <Form
                 data-testid="login form"
@@ -83,6 +83,7 @@ export default function Login() {
                       placeholder="example@gmail.com"
                       prefix={<MailTwoTone />}
                       className="py-2"
+                      autoComplete="false"
                     />
                   </Form.Item>
 
@@ -96,21 +97,23 @@ export default function Login() {
 
                   <Form.Item>
                     <Button
+                      loading={creatingUser}
                       data-testid="login btn"
                       name="login"
                       type="primary"
                       htmlType="submit"
                       className="block w-full mt-4 py-2 h-auto text-lg"
                     >
-                      Login
+                      Signup
                     </Button>
                   </Form.Item>
+
                   <div className="flex justify-center">
                     <Link
                       className="text-white underline underline-offset-4 text-lg"
-                      to={"/signup"}
+                      to={"/login"}
                     >
-                      Don't have an Account ? Signup
+                      Already have Account ? Login
                     </Link>
                   </div>
                 </Space>
