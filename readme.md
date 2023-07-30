@@ -8,6 +8,12 @@ This project was bootstrapped with [Vite](https://vitejs.dev/).
 
 ## Run Locally
 
+## `download code`
+
+Download the code directly from repository or \
+open the terminal in your computer and paste the following command. \
+git clone https://github.com/Aashar-Mehmood/FunFox-CodingTest.git
+
 ## `npm install`
 
 Install all the dependencies
