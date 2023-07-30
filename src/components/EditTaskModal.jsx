@@ -2,42 +2,46 @@ import { Form, Modal, Input, Checkbox, message } from "antd";
 import { useState } from "react";
 import useFireStore from "../hooks/useFireStore";
 import useAuth from "../hooks/useAuth";
-export default function AddTaskModal(props) {
-  const { createTask, getTasks } = useFireStore();
-  const { open, setOpen } = props;
+export default function EditTaskModal(props) {
+  const { updateTask, getTasks } = useFireStore();
+  const { id, name, description, isPublic, open, setOpen } = props;
   const { user } = useAuth();
-  const [isPublic, setIsPublic] = useState(false);
+  const [newIsPublic, setNewIsPublic] = useState(isPublic);
   const [messageApi, contextHolder] = message.useMessage();
   const [isCreatingTask, setIsCreatingTask] = useState(false);
   const [form] = Form.useForm();
+
+  form.setFieldsValue({
+    name,
+    description,
+  });
+
   const handleCreate = () => {
     form.validateFields().then((values) => {
       const { name, description } = values;
       const payload = {
-        groupId: localStorage.getItem("userGroupId"),
-        userId: user.uid,
         name,
         description,
-        isPublic,
-        isCompleted: false,
+        isPublic: newIsPublic,
       };
       setIsCreatingTask(true);
-      createTask(payload)
+      updateTask(id, payload)
         .then((res) => {
           getTasks(localStorage.getItem("userGroupId"));
           setIsCreatingTask(false);
           messageApi.open({
             type: "success",
-            content: "Task Created Successfully",
+            content: "Task Updated Successfully",
           });
           form.resetFields();
           setOpen(false);
         })
         .catch((err) => {
+          console.log(err);
           setIsCreatingTask(false);
           messageApi.open({
             type: "error",
-            content: err?.message ?? "Failed to Create Task",
+            content: err?.message ?? "Failed to Update Task",
           });
           form.resetFields();
           setOpen(false);
@@ -60,7 +64,7 @@ export default function AddTaskModal(props) {
         className: "px-6 py-2 h-auto ",
         "data-testid": "cancel button",
       }}
-      okText="Create"
+      okText="Update"
     >
       <Form form={form} layout="vertical">
         {contextHolder}
@@ -83,7 +87,8 @@ export default function AddTaskModal(props) {
         <Checkbox
           className="my-4"
           name="sendToAllUsers"
-          onChange={(e) => setIsPublic(e.target.checked)}
+          onChange={(e) => setNewIsPublic(e.target.checked)}
+          checked={newIsPublic}
         >
           Public to Group Members
         </Checkbox>

@@ -9,10 +9,13 @@ import {
   query,
   where,
   addDoc,
+  updateDoc,
+  deleteDoc,
 } from "firebase/firestore";
 import useData from "./useData";
 export default function useFireStore() {
-  const { tasksData, setTasksData } = useData();
+  const { tasksData, setTasksData, dataForFilter, setDataForFilter } =
+    useData();
   const [userGroups, setUserGroups] = useState([]);
   const [userGroupError, setUserGroupError] = useState("");
   async function getUserGroups() {
@@ -46,7 +49,14 @@ export default function useFireStore() {
     const querySnapshot = await getDocs(q);
     setTasksData(
       querySnapshot?.docs?.map((doc) => {
-        console.log(doc.data());
+        return {
+          id: doc.id,
+          ...doc.data(),
+        };
+      })
+    );
+    setDataForFilter(
+      querySnapshot?.docs?.map((doc) => {
         return {
           id: doc.id,
           ...doc.data(),
@@ -57,6 +67,15 @@ export default function useFireStore() {
   async function createTask(data) {
     await addDoc(collection(firebaseDb, "tasks"), { ...data });
   }
+  async function updateTask(taskId, data) {
+    const taskRef = doc(firebaseDb, "tasks", taskId);
+
+    await updateDoc(taskRef, { ...data });
+  }
+
+  async function deleteTask(taskId) {
+    await deleteDoc(doc(firebaseDb, "tasks", taskId));
+  }
 
   return {
     getUserGroups,
@@ -65,5 +84,7 @@ export default function useFireStore() {
     addUserInDb,
     getTasks,
     createTask,
+    updateTask,
+    deleteTask,
   };
 }

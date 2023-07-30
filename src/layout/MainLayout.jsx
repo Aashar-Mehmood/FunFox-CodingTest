@@ -10,7 +10,7 @@ export default function MainLayout() {
         <AppHeader />
       </Header>
       <Layout>
-        <Layout className="p-6 bg-slate-100">
+        <Layout className="sm:p-6 bg-slate-100 py-6">
           <Content className="px-6 m-0 min-h-screen lg:w-3/4 lg:mx-auto">
             <Outlet />
           </Content>

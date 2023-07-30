@@ -14,12 +14,14 @@ const tasks = [
 export const DataContext = createContext();
 export default function DataProvider(props) {
   const [tasksData, setTasksData] = useState([]);
-
+  const [dataForFilter, setDataForFilter] = useState([]);
   return (
     <DataContext.Provider
       value={{
         tasksData,
         setTasksData,
+        dataForFilter,
+        setDataForFilter,
       }}
     >
       {props.children}

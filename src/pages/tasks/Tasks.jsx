@@ -6,27 +6,29 @@ import { useEffect, useState } from "react";
 import useData from "../../hooks/useData";
 import useFireStore from "../../hooks/useFireStore";
 import useAuth from "../../hooks/useAuth";
+import { message } from "antd";
 export default function Tasks() {
   const [open, setOpen] = useState(false);
   const { tasksData } = useData();
   const { getTasks } = useFireStore();
   const { user } = useAuth();
+  const [messageApi, contextHolder] = message.useMessage();
   useEffect(() => {
     getTasks(localStorage.getItem("userGroupId"));
   }, []);
-  console.log(tasksData);
 
   const tasks = tasksData.map((task) => {
     if (task.userId !== user.uid && !task.isPublic) {
       return;
     }
-    return <Task {...task} key={task.id} />;
+    return <Task {...task} key={task.id} messageApi={messageApi} />;
   });
 
   return (
     <>
       <div className="flex justify-between items-center mb-8">
-        <h2 className="text-2xl m-0">
+        {contextHolder}
+        <h2 className="sm:text-2xl text-xl m-0">
           Welcome {firebaseAuth.currentUser.email.split("@")[0]}
         </h2>
         <button
