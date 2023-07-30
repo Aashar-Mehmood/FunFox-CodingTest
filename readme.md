@@ -24,16 +24,16 @@ Start the development server
 
 ## Features
 
--> User Signup (firebase Auth)
--> User Login (firebase Auth)
--> Create Tasks (fireabse firestore)
--> Edit Task
--> Mark Task as completed
--> Delete Task
--> View task created by other group members
--> Filter tasks by Complete, inComplete and My Task Tags.
--> Fully Responsive Design
--> Modals and Popup Messages to enhance user Experience.
+-> User Signup (firebase Auth) \
+-> User Login (firebase Auth) \
+-> Create Tasks (firebase firestore) \
+-> Edit Task \
+-> Mark Task as completed \
+-> Delete Task \
+-> View tasks created by other group members \
+-> Filter tasks by Complete, inComplete, and My Task Tags. \
+-> Fully Responsive Design \
+-> Modals and Popup Messages to enhance user Experience. \
 
 ## Available Scripts
 
@@ -46,4 +46,4 @@ Open [http://localhost:5173](http://localhost:5173) to view it in your browser.
 
 ### `npm run build`
 
-Builds the assests for production.
+Builds the assets for production.
