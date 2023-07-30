@@ -1,7 +1,7 @@
 import "./App.css";
-import DashboardLayout from "./layout/DashboardLayout";
+import MainLayout from "./layout/MainLayout";
 function App() {
-  return <DashboardLayout />;
+  return <MainLayout />;
 }
 
 export default App;

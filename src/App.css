@@ -6,26 +6,36 @@ body {
   padding: 0;
 }
 
-:where(
-    .css-dev-only-do-not-override-yp8pcc
-  ).ant-menu-light.ant-menu-root.ant-menu-vertical {
-  border-inline-end: 0 !important;
+input:-webkit-autofill,
+input:-webkit-autofill:focus {
+  transition: background-color 0s 600000s, color 0s 600000s;
 }
 
-:where(.css-dev-only-do-not-override-htwhyh).ant-input,
-:where(.css-dev-only-do-not-override-htwhyh).ant-input-number,
-:where(.css-dev-only-do-not-override-htwhyh).ant-btn-default {
-  border: 1px solid #00000070;
+#signup-container,
+#login-container {
+  min-height: 100vh;
+  background-image: url("./assets/studyBg2.jpg");
+  background-size: cover;
 }
-:where(.css-dev-only-do-not-override-htwhyh).ant-select-single:not(
-    .ant-select-customize-input
-  )
-  .ant-select-selector {
-  padding-top: 0.33rem;
-  padding-bottom: 0.33rem;
-  height: auto;
-  border: 1px solid #00000070;
+.form-container {
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
-:where(.css-dev-only-do-not-override-yp8pcc).ant-tag {
-  line-height: unset;
+
+.form-container > div {
+  margin: 20px 0;
+  padding: 0rem 2rem 1rem 2rem;
+  background: rgb(255 255 255 / 58%);
+  border-radius: 16px;
+  box-shadow: 0 4px 30px rgb(0 0 0 / 10%);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+  border: 1px solid rgb(0 0 0);
+}
+
+#signup-container label {
+  font-size: 1rem;
 }

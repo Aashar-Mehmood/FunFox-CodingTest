@@ -1,15 +1,14 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Row, Col, Button, Form, Input, Space, message } from "antd";
-import { MailTwoTone, LockTwoTone } from "@ant-design/icons";
-import "./signup.css";
+import { MailOutlined, LockOutlined, UserOutlined } from "@ant-design/icons";
 import funfox from "../../assets/funFoxRm.png";
 import useAuth from "../../hooks/useAuth";
 import { Navigate, Link } from "react-router-dom";
 import { userSignup } from "../../services/auth";
-
+import useFireStore from "../../hooks/useFireStore";
 export default function Signup() {
   const [messageApi, contextHolder] = message.useMessage();
-  const { user, setUser } = useAuth();
+  const { user, setUser, setIsSigningUp, setUserName } = useAuth();
   const [creatingUser, setCreatingUser] = useState(false);
   function showMessage(type, msgText, onclose = () => null) {
     messageApi.open({
@@ -20,30 +19,31 @@ export default function Signup() {
   }
 
   const onFinish = (values) => {
-    const { email, password } = values;
-    if (!email && !password) {
-      showMessage("error", "Enter email and password");
-    } else if (!email) {
-      showMessage("error", "Email is Required");
-    } else if (!password) {
-      showMessage("error", "Password is Required");
-    } else if (
+    const { name, email, password } = values;
+    if (
       !email.match(
         /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
       )
     ) {
       showMessage("error", "Invalid Email");
+    } else if (password.length < 6) {
+      showMessage("error", "Password should have atleast 6 characters");
     } else {
-      creatingUser(true);
+      setCreatingUser(true);
+      setIsSigningUp(true);
+      setUserName(name);
       userSignup(email, password)
         .then((response) => {
-          showMessage("success", "Registered Successfully", () => {
-            setCreatingUser(false);
-            setUser(response.user);
-          });
+          console.log(response);
         })
         .catch((err) => {
-          showMessage("error", "Failed to create account");
+          setCreatingUser(false);
+          showMessage(
+            "error",
+            err?.message
+              ? err?.message.split(":")[1]
+              : "Failed to create account"
+          );
         });
     }
   };
@@ -60,10 +60,7 @@ export default function Signup() {
               <img src={funfox} alt="CMPND" role="img" />
             </div>
             <Space direction="vertical" size="large" className="flex">
-              <h2
-                className="text-2xl text-center text-white my-1"
-                role="heading"
-              >
+              <h2 className="text-2xl text-center my-1" role="heading">
                 Create a New Account
               </h2>
               <Form
@@ -77,20 +74,35 @@ export default function Signup() {
                   size="small"
                   style={{ display: "flex" }}
                 >
-                  <Form.Item label="Email" name="email">
+                  <Form.Item
+                    label="Name"
+                    name="name"
+                    rules={[{ required: true, message: "Name is required" }]}
+                  >
+                    <Input prefix={<UserOutlined />} className="py-2" />
+                  </Form.Item>
+                  <Form.Item
+                    label="Email"
+                    name="email"
+                    rules={[{ required: true, message: "Email is required" }]}
+                  >
                     <Input
-                      data-testid="email"
                       placeholder="example@gmail.com"
-                      prefix={<MailTwoTone />}
+                      prefix={<MailOutlined />}
                       className="py-2"
-                      autoComplete="false"
                     />
                   </Form.Item>
 
-                  <Form.Item label="Password" name="password">
+                  <Form.Item
+                    label="Password"
+                    name="password"
+                    rules={[
+                      { required: true, message: "Password is required" },
+                    ]}
+                  >
                     <Input.Password
                       data-testid="password"
-                      prefix={<LockTwoTone />}
+                      prefix={<LockOutlined />}
                       className="py-2"
                     />
                   </Form.Item>
@@ -110,7 +122,7 @@ export default function Signup() {
 
                   <div className="flex justify-center">
                     <Link
-                      className="text-white underline underline-offset-4 text-lg"
+                      className=" underline underline-offset-4 text-lg"
                       to={"/login"}
                     >
                       Already have Account ? Login

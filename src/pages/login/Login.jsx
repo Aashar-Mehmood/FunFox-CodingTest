@@ -1,7 +1,6 @@
 import React from "react";
 import { Row, Col, Button, Form, Input, Space, message } from "antd";
 import { MailTwoTone, LockTwoTone } from "@ant-design/icons";
-import "./login.css";
 import useAuth from "../../hooks/useAuth";
 import funfox from "../../assets/funFoxRm.png";
 import { Navigate, useLocation, Link } from "react-router-dom";
@@ -12,10 +11,11 @@ export default function Login() {
   const location = useLocation();
   const { from } = location.state || { from: "/" };
 
-  function showMessage(type, msgText) {
+  function showMessage(type, msgText, onclose = () => null) {
     messageApi.open({
       type: type,
       content: msgText,
+      onClose: onclose,
     });
   }
 
@@ -40,7 +40,10 @@ export default function Login() {
     } else {
       userLogin(email, password)
         .then((response) => {
-          showMessage("success", "Logged in Successfully");
+          showMessage("success", "Logged in Successfully", () => {
+            setLoading(false);
+            setUser(response.user);
+          });
         })
         .catch((err) => {
           showMessage("error", "Invalid Credentials");
@@ -60,10 +63,7 @@ export default function Login() {
               <img src={funfox} alt="funfox" role="img" />
             </div>
             <Space direction="vertical" size="large" className="flex">
-              <h2
-                className="text-2xl text-center text-white my-1"
-                role="heading"
-              >
+              <h2 className="text-2xl text-center my-1" role="heading">
                 Login
               </h2>
               <Form
@@ -107,7 +107,7 @@ export default function Login() {
                   </Form.Item>
                   <div className="flex justify-center">
                     <Link
-                      className="text-white underline underline-offset-4 text-lg"
+                      className=" underline underline-offset-4 text-lg"
                       to={"/signup"}
                     >
                       Don't have an Account ? Signup

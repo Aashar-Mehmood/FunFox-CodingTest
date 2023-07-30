@@ -3,10 +3,7 @@ import ProtectedRoutes from "./ProtectedRoutes";
 import App from "./App";
 import Login from "./pages/login/Login";
 import Signup from "./pages/signup/Signup";
-import Dashboard from "./pages/dashboard/Dashboard";
-import Exercises from "./pages/exercises/Exercises";
-import AddExercise from "./pages/exercises/AddExercise";
-import EditExercise from "./pages/exercises/EditExercise";
+import Tasks from "./pages/tasks/Tasks";
 export default function Routes({ children }) {
   const routes = createBrowserRouter([
     {
@@ -28,20 +25,7 @@ export default function Routes({ children }) {
             {
               path: "/",
               index: true,
-              element: <Dashboard />,
-            },
-
-            {
-              path: "/workouts/:id/addExercise",
-              element: <AddExercise />,
-            },
-            {
-              path: "/exercises",
-              element: <Exercises />,
-            },
-            {
-              path: "/exercises/:id/edit",
-              element: <EditExercise />,
+              element: <Tasks />,
             },
           ],
         },

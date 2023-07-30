@@ -4,6 +4,7 @@ import {
   setPersistence,
   browserLocalPersistence,
 } from "firebase/auth";
+import { getFirestore } from "firebase/firestore";
 const firebaseConfig = {
   apiKey: "AIzaSyAQnJhuYXvn9KBnHipPjK5agnEboCKGOfE",
   authDomain: "funfox-c6b48.firebaseapp.com",
@@ -17,4 +18,5 @@ const firebaseConfig = {
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 export const firebaseAuth = getAuth(app);
+export const firebaseDb = getFirestore(app);
 setPersistence(firebaseAuth, browserLocalPersistence);
