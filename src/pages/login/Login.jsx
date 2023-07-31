@@ -40,10 +40,7 @@ export default function Login() {
     } else {
       userLogin(email, password)
         .then((response) => {
-          showMessage("success", "Logged in Successfully", () => {
-            setLoading(false);
-            setUser(response.user);
-          });
+          showMessage("success", "Logged in Successfully");
         })
         .catch((err) => {
           showMessage("error", "Invalid Credentials");

@@ -8,7 +8,7 @@ import { userSignup } from "../../services/auth";
 import useFireStore from "../../hooks/useFireStore";
 export default function Signup() {
   const [messageApi, contextHolder] = message.useMessage();
-  const { user, setUser, setIsSigningUp, setUserName } = useAuth();
+  const { user, setIsSigningUp, setUserName } = useAuth();
   const [creatingUser, setCreatingUser] = useState(false);
   function showMessage(type, msgText, onclose = () => null) {
     messageApi.open({

@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { firebaseDb } from "../firebase";
 import {
   getDocs,
+  getDoc,
   collection,
   setDoc,
   doc,
@@ -13,11 +14,12 @@ import {
   deleteDoc,
 } from "firebase/firestore";
 import useData from "./useData";
+import useAuth from "./useAuth";
 export default function useFireStore() {
-  const { tasksData, setTasksData, dataForFilter, setDataForFilter } =
-    useData();
+  const { setTasksData, setDataForFilter } = useData();
   const [userGroups, setUserGroups] = useState([]);
   const [userGroupError, setUserGroupError] = useState("");
+  const { setGroupId } = useAuth();
   async function getUserGroups() {
     try {
       const docRef = collection(firebaseDb, "userGroup");
@@ -33,6 +35,17 @@ export default function useFireStore() {
       );
     } catch (error) {
       setUserGroupError(error);
+    }
+  }
+
+  async function getUserGroup(uId) {
+    const docRef = doc(firebaseDb, "users", uId);
+    const docSnap = await getDoc(docRef);
+    if (docSnap.exists()) {
+      console.log("Document data:", docSnap.data());
+      return docSnap.data();
+    } else {
+      console.log("No such document!");
     }
   }
 
@@ -79,6 +92,7 @@ export default function useFireStore() {
 
   return {
     getUserGroups,
+    getUserGroup,
     userGroups,
     userGroupError,
     addUserInDb,

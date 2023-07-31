@@ -6,9 +6,11 @@ export const AuthContext = createContext();
 export default function AuthProvider(props) {
   const [userName, setUserName] = useState("");
   const [user, setUser] = useState(null);
+  const [groupId, setGroupId] = useState("");
   const [loading, setLoading] = useState(true);
   const [isSigningUp, setIsSigningUp] = useState(false);
-  const { getUserGroups, userGroups, addUserInDb } = useFireStore();
+  const { getUserGroups, getUserGroup, userGroups, addUserInDb } =
+    useFireStore();
 
   useEffect(() => {
     getUserGroups();
@@ -16,8 +18,21 @@ export default function AuthProvider(props) {
 
   useEffect(() => {
     const unsubscribe = onIdTokenChanged(firebaseAuth, (user) => {
-      setUser(user);
-      setLoading(false);
+      if (user) {
+        getUserGroup(user.uid)
+          .then((res) => {
+            setGroupId(res.groupId);
+            setUser(user);
+            setLoading(false);
+          })
+          .catch((err) => {
+            setUser(user);
+            setLoading(false);
+          });
+      } else {
+        setUser(null);
+        setLoading(false);
+      }
     });
     return unsubscribe;
   }, []);
@@ -25,7 +40,7 @@ export default function AuthProvider(props) {
   useEffect(() => {
     if (isSigningUp && user && userName) {
       const randomIndex = Math.floor(Math.random() * userGroups?.length);
-      localStorage.setItem("userGroupId", userGroups[randomIndex].id);
+      setGroupId(userGroups[randomIndex].id);
       addUserInDb(user.uid, userGroups[randomIndex].id, userName)
         .then((res) => {
           setIsSigningUp(false);
@@ -38,7 +53,15 @@ export default function AuthProvider(props) {
 
   return (
     <AuthContext.Provider
-      value={{ user, setUser, isSigningUp, setIsSigningUp, setUserName }}
+      value={{
+        user,
+        setUser,
+        isSigningUp,
+        setIsSigningUp,
+        setUserName,
+        groupId,
+        setGroupId,
+      }}
     >
       {!loading && props.children}
     </AuthContext.Provider>

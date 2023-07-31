@@ -5,7 +5,7 @@ import useAuth from "../hooks/useAuth";
 export default function EditTaskModal(props) {
   const { updateTask, getTasks } = useFireStore();
   const { id, name, description, isPublic, open, setOpen } = props;
-  const { user } = useAuth();
+  const { user, groupId } = useAuth();
   const [newIsPublic, setNewIsPublic] = useState(isPublic);
   const [messageApi, contextHolder] = message.useMessage();
   const [isCreatingTask, setIsCreatingTask] = useState(false);
@@ -27,7 +27,7 @@ export default function EditTaskModal(props) {
       setIsCreatingTask(true);
       updateTask(id, payload)
         .then((res) => {
-          getTasks(localStorage.getItem("userGroupId"));
+          getTasks(groupId);
           setIsCreatingTask(false);
           messageApi.open({
             type: "success",

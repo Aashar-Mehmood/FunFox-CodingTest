@@ -8,7 +8,7 @@ export default function Task(props) {
   const { updateTask, getTasks, deleteTask } = useFireStore();
   const [isUpdatingTask, setIsUpdatingTask] = useState(false);
   const [open, setOpen] = useState(false);
-  const { user } = useAuth();
+  const { user, groupId } = useAuth();
   const { id, name, description, isCompleted, isPublic, userId, messageApi } =
     props;
   function handleEdit(e) {
@@ -20,7 +20,7 @@ export default function Task(props) {
     setIsUpdatingTask(true);
     deleteTask(id)
       .then((response) => {
-        getTasks(localStorage.getItem("userGroupId"))
+        getTasks(groupId)
           .then((res) => {
             messageApi.open({
               type: "success",
@@ -50,7 +50,7 @@ export default function Task(props) {
     setIsUpdatingTask(true);
     updateTask(id, { isCompleted: !isCompleted })
       .then((response) => {
-        getTasks(localStorage.getItem("userGroupId"))
+        getTasks(groupId)
           .then((res) => {
             messageApi.open({
               type: "success",

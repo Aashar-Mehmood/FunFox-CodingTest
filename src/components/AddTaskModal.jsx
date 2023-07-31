@@ -5,7 +5,7 @@ import useAuth from "../hooks/useAuth";
 export default function AddTaskModal(props) {
   const { createTask, getTasks } = useFireStore();
   const { open, setOpen } = props;
-  const { user } = useAuth();
+  const { user, groupId } = useAuth();
   const [isPublic, setIsPublic] = useState(false);
   const [messageApi, contextHolder] = message.useMessage();
   const [isCreatingTask, setIsCreatingTask] = useState(false);
@@ -14,7 +14,7 @@ export default function AddTaskModal(props) {
     form.validateFields().then((values) => {
       const { name, description } = values;
       const payload = {
-        groupId: localStorage.getItem("userGroupId"),
+        groupId,
         userId: user.uid,
         name,
         description,
@@ -24,7 +24,7 @@ export default function AddTaskModal(props) {
       setIsCreatingTask(true);
       createTask(payload)
         .then((res) => {
-          getTasks(localStorage.getItem("userGroupId"));
+          getTasks(groupId);
           setIsCreatingTask(false);
           messageApi.open({
             type: "success",

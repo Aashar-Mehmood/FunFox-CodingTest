@@ -11,11 +11,12 @@ export default function Tasks() {
   const [open, setOpen] = useState(false);
   const { tasksData } = useData();
   const { getTasks } = useFireStore();
-  const { user } = useAuth();
+  const { user, groupId } = useAuth();
   const [messageApi, contextHolder] = message.useMessage();
   useEffect(() => {
-    getTasks(localStorage.getItem("userGroupId"));
-  }, []);
+    getTasks(groupId);
+    console.log(groupId);
+  }, [groupId]);
 
   const tasks = tasksData.map((task) => {
     if (task.userId !== user.uid && !task.isPublic) {
