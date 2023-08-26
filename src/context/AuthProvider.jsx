@@ -2,6 +2,8 @@ import { createContext, useEffect, useState } from "react";
 import { firebaseAuth } from "../firebase";
 import { onIdTokenChanged } from "firebase/auth";
 import useFireStore from "../hooks/useFireStore";
+import { Spin } from "antd";
+
 export const AuthContext = createContext();
 export default function AuthProvider(props) {
   const [userName, setUserName] = useState("");
@@ -63,7 +65,16 @@ export default function AuthProvider(props) {
         setGroupId,
       }}
     >
-      {!loading && props.children}
+      {loading ? (
+        <div
+          className="w-screen h-screen flex justify-center items-center"
+          style={{ background: "rgba(0, 0, 0, 0.05)" }}
+        >
+          <Spin />
+        </div>
+      ) : (
+        props.children
+      )}
     </AuthContext.Provider>
   );
 }

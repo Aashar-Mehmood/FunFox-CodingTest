@@ -1,9 +1,11 @@
+import { lazy } from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import ProtectedRoutes from "./ProtectedRoutes";
 import App from "./App";
-import Login from "./pages/login/Login";
-import Signup from "./pages/signup/Signup";
-import Tasks from "./pages/tasks/Tasks";
+const Login = lazy(() => import("./pages/login/Login"));
+const Signup = lazy(() => import("./pages/signup/Signup"));
+const Tasks = lazy(() => import("./pages/tasks/Tasks"));
+
 export default function Routes({ children }) {
   const routes = createBrowserRouter([
     {
